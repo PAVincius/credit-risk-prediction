@@ -1,6 +1,6 @@
 {
   "index": "Introduction",
-  "advanced": "Advanced (A Folder)",
+  "prerequisites": "Before you get started",
   "about": {
     "title": "About",
     "type": "page"

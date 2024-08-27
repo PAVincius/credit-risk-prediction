@@ -3,10 +3,10 @@ import { DocsThemeConfig, ThemeSwitch, useConfig } from 'nextra-theme-docs'
 import { useRouter } from 'next/router'
 
 const config: DocsThemeConfig = {
-  logo: <span>Nextra Shadcn Tailwind</span>,
+  logo: <span>FinanceInsight</span>,
   logoLink: '/',
   chat: {
-    link: 'https://twitter.com/ob12er',
+    link: 'https://twitter.com/PAVincius',
     icon: (
       <svg width="24" height="24" viewBox="0 0 248 204">
         <path
@@ -20,12 +20,12 @@ const config: DocsThemeConfig = {
     text: 'Convert Fast',
   },
   project: {
-    link: 'https://github.com/ObservedObserver/nextra-docs-tailwind-shadcn-template'
+    link: 'https://github.com/PAVincius/credit-risk-prediction/'
   },
   banner: {
-    text: "This is a template based on nextra + tailwind + shadcn-ui",
+    text: "Under development, for more information please visit https://github.com/PAVincius/credit-risk-prediction/",
   },
-  docsRepositoryBase: 'https://github.com/ObservedObserver/nextra-docs-tailwind-shadcn-template',
+  docsRepositoryBase: 'https://github.com/PAVincius/credit-risk-prediction/',
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();

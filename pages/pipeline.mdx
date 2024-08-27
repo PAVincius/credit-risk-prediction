@@ -1,0 +1,64 @@
+import { Steps } from 'nextra/components'
+
+# Pipeline review
+
+This Pipeline consists of(but not limited to), data collection, preparation, exploration, model building, evaluation, deployment, and monitoring.
+ 
+<Steps>
+
+### Step 1: Data Collection and Preparation
+ 
+#### Data sources:
+- Historical credit data (score, payments, debt, etc.)
+- Demographic data (age, income, occupation, etc.)
+- Behavioral data (purchase history, card usage patterns, etc.)
+- Alternative data (social media, mobile device data, etc.)
+
+#### Storage:
+- Amazon S3: For storing large volumes of raw data.
+- Amazon Redshift: For storing and querying structured data efficiently.
+
+#### Preparation:
+- AWS Glue: For ETL (Extract, Transform, Load) processes.
+- Amazon Athena: For querying data stored in S3 using SQL.
+- Amazon SageMaker: For data preparation tasks like cleaning, transformation, and feature engineering.
+ 
+### Step 2: Data Exploration and Analysis
+ 
+- Amazon QuickSight: For visualizing and exploring data, identifying patterns, correlations, and outliers.
+- Amazon SageMaker: For statistical analysis and interactive visualizations.
+
+### Step 3: Model Building
+
+#### Amazon SageMaker:
+- Algorithms: Choose suitable algorithms for classification (e.g., Random Forest, XGBoost, Neural Networks).
+- Training: Train the model using prepared data.
+- Hyperparameter tuning: Optimize model performance by adjusting hyperparameters.
+
+#### Amazon SageMaker Autopilot:
+  For automating algorithm selection and hyperparameter optimization.
+
+### Step 4: Model Evaluation
+
+##### Evaluation metrics:
+- Accuracy
+- Recall
+- F1-score
+- ROC curve
+
+#### Amazon SageMaker:
+
+- Endpoint: For serving the model in real-time, allowing predictions for new data.
+- Batch Transform: For processing large volumes of data asynchronously.
+
+### Step 5: Monitoring and Continuous Improvement
+
+- Amazon CloudWatch: For monitoring model performance in production.
+- Amazon SageMaker Model Monitor: For detecting data drift and retraining the model as needed.
+
+### Step 6: Monitoring and Continuous Improvement
+
+- Amazon CloudWatch: For monitoring model performance in production.
+- Amazon SageMaker Model Monitor: For detecting data drift and retraining the model as needed.
+
+</Steps>

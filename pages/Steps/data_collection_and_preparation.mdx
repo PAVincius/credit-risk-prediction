@@ -1,0 +1,85 @@
+# Data Collection and Preparation
+
+## Collection
+
+We'll use the data available [here](https://github.com/LEARNEREA/Data_Science/blob/main/Data/credit_risk_dataset.csv). It's a very simplistic data base on information about loan applications, including demographic data of applicants, loan details, and credit history information. It's likely used for predicting loan default risk.
+
+To extract that data we'll extract it from a relational database to S3.
+
+Here's a sample of the data above:
+
+| person_age | person_income | person_home_ownership | person_emp_length | loan_intent | loan_grade | loan_amnt | loan_int_rate | loan_status | loan_percent_income | cb_person_default_on_file | cb_person_cred_hist_length |
+|------------|---------------|-----------------------|-------------------|-------------|------------|-----------|---------------|-------------|---------------------|---------------------------|----------------------------|
+|         22 |         59000 | RENT                  | 123.0             | PERSONAL    | D          |     35000 |         16.02 |           1 | 0.59                | Y                         |                          3 |
+|         21 |          9600 | OWN                   | 5.0               | EDUCATION   | B          |      1000 | 11.14         |           0 | 0.1                 | N                         |                          2 |
+|         25 |          9600 | MORTGAGE              | 1.0               | MEDICAL     | C          |      5500 | 12.87         |           1 | 0.57                | N                         |                          3 |
+|         23 |         65500 | RENT                  | 4.0               | MEDICAL     | C          |     35000 | 15.23         |           1 | 0.53                | N                         |                          2 |
+|         24 |         54400 | RENT                  | 8.0               | MEDICAL     | C          |     35000 | 14.27         |           1 | 0.55                | Y                         |                          4 |
+|         21 |          9900 | OWN                   | 2.0               | VENTURE     | A          |      2500 | 7.14          |           1 | 0.25                | N                         |                          2 |
+|         26 |         77100 | RENT                  | 8.0               | EDUCATION   | B          |     35000 | 12.42         |           1 | 0.45                | N                         |                          3 |
+
+## Variables
+
+**person_age**: Age of the loan applicant.
+
+**person_income**: Annual income of the applicant.
+
+**person_home_ownership**: Indicates whether the applicant owns, rents, or has another housing situation.
+
+**person_emp_length**: Length of employment in years.
+
+**loan_intent**: Purpose of the loan (e.g., personal, education, medical).
+
+**loan_grade**: Grade assigned to the loan by the lender, likely indicating risk level.
+
+**loan_amnt**: Amount of the loan.
+
+**loan_int_rate**: Interest rate charged on the loan.
+
+**loan_status**: Indicates whether the loan was repaid or defaulted.
+
+**loan_percent_income**: Percentage of the applicant's income represented by the loan.
+
+**cb_person_default_on_file**: Indicates whether the applicant has a history of defaulting on loans.
+
+**cb_person_cred_hist_length**: Length of the applicant's credit history.
+
+## Let's get some insights!
+
+The target varible here is likely the *loan_status* which indicates whether a loan was repaid or defaulted. We can so use this information and then try to get corelation between the other variables to make a good model in the future.
+
+## Preparation
+
+As you saw, our database is far from reality when it comes to real-gathered data. So for the sake of science, I'll let here a step-by-step approach to prepare the data using [Sagemaker](https://aws.amazon.com/pt/blogs/aws/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/).
+
+import { Callout } from 'nextra/components'
+ 
+<Callout type="info" emoji="ℹ️">
+  It's valid to say that usually data preparationtakes up to 80% of our time dealing with machine learning, so be really careful about that because nobody should make up for someone's dirty work in this process.
+</Callout>
+
+Since we won't be dealing with complex data transformations and automated ETL(Extract, Transform, Load) processing, we can use AWS Athena instead of Glue.
+
+### Athena's power
+
+We can use the following query to get some information out of the data source we just extracted from our S3 bucket:
+
+#### Analyzing the distribution of loans by grade:
+
+```sql
+SELECT loan_grade, COUNT(*) AS total_loans
+FROM s3_loans_data
+GROUP BY loan_grade
+ORDER BY loan_grade;
+```
+#### Checking the default rate:
+
+```sql
+SELECT 
+    loan_status, 
+    COUNT(*) AS total_loans,
+    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM s3_loans_data) AS percentagem
+FROM s3_loans_data
+GROUP BY loan_status;
+```
+
